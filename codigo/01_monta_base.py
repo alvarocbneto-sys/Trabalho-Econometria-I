@@ -81,14 +81,14 @@ df["regiao"] = df["cod7"].str[0].map(nomes_regiao)
 for r in ["Norte", "Nordeste", "Sul", "Centro-Oeste"]:
     df["d_" + r.lower().replace("-", "_")] = (df["regiao"] == r).astype(int)
 
-# 9) Salva a base completa e a amostra (100 mil habitantes ou mais)
+# 9) Salva a base completa e a amostra (60 mil habitantes ou mais)
 df.to_csv(FINAL / "base_todos_municipios_2010.csv", index=False, encoding="utf-8-sig")
-amostra = df[df["pop_total"] >= 100000].copy()
+amostra = df[df["pop_total"] >= 60000].copy()
 amostra.to_csv(FINAL / "base_final.csv", index=False, encoding="utf-8-sig")
 amostra.to_excel(FINAL / "base_final.xlsx", index=False)
 
 print("municípios no Atlas:", len(df))
 print("óbitos casados:", int(df["obitos_3anos"].sum()))
-print("amostra >= 100 mil:", len(amostra), "| colunas:", amostra.shape[1])
+print("amostra >= 60 mil:", len(amostra), "| colunas:", amostra.shape[1])
 print("valores faltantes na amostra:", int(amostra.isna().sum().sum()))
 print(amostra["regiao"].value_counts())
