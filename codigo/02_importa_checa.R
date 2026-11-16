@@ -3,3 +3,4 @@ str(d)
 nrow(d)
 colSums(is.na(d))
 summary(d[, c("taxa_homicidio", "gini", "desocupacao", "anos_estudo_esperados")])
+
