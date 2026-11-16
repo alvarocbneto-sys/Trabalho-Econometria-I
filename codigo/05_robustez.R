@@ -11,8 +11,8 @@ m2 <- lm(f2, d)
 m3 <- lm(f2, d, weights = pop_total)
 m4 <- lm(f2, d, subset = cod7 != 2919553)
 m5 <- lm(update(f1, . ~ . + factor(uf)), d)
-ext <- function(nome, m, V) {
-  ct <- coeftest(m, vcov = V)
+ext <- function(nome, m, V, df = NULL) {
+  ct <- coeftest(m, vcov = V, df = df)
   v <- c("gini", "desocupacao", "anos_estudo_esperados")
   data.frame(modelo = nome, var = v, beta = ct[v, 1], ep = ct[v, 2], p = ct[v, 4], row.names = NULL)
 }
@@ -20,7 +20,7 @@ tab <- rbind(
   ext("M1 HC3", m1, vcovHC(m1, "HC3")),
   ext("M2 HC3", m2, vcovHC(m2, "HC3")),
   ext("M2 HC1", m2, vcovHC(m2, "HC1")),
-  ext("M2 cluster UF", m2, vcovCL(m2, cluster = d$uf)),
+  ext("M2 cluster UF", m2, vcovCL(m2, cluster = d$uf), 26),
   ext("M2 sem LEM HC3", m4, vcovHC(m4, "HC3")),
   ext("M2 WLS pop HC3", m3, vcovHC(m3, "HC3")),
   ext("UF dummies HC1", m5, vcovHC(m5, "HC1"))

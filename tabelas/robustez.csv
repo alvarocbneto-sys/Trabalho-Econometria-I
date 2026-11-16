@@ -8,8 +8,8 @@
 "M2 HC1","gini",-0.264,0.8224,0.7483
 "M2 HC1","desocupacao",0.0558,0.0107,0
 "M2 HC1","anos_estudo_esperados",-0.2416,0.0443,0
-"M2 cluster UF","gini",-0.264,1.1615,0.8203
-"M2 cluster UF","desocupacao",0.0558,0.0138,1e-04
+"M2 cluster UF","gini",-0.264,1.1615,0.822
+"M2 cluster UF","desocupacao",0.0558,0.0138,4e-04
 "M2 cluster UF","anos_estudo_esperados",-0.2416,0.0334,0
 "M2 sem LEM HC3","gini",0.0828,0.7735,0.9148
 "M2 sem LEM HC3","desocupacao",0.0558,0.011,0

@@ -25,3 +25,8 @@ tapply(d$res, d$uf, mean)
 sd(d$gini)
 quantile(d$gini, c(0.25, 0.75))
 sum(cd > 4 / nrow(d))
+d$esp <- d$pop_total * 3 * exp(fitted(m2)) / 1e5
+bptest(m2, ~ log(esp), data = d)
+coeftest(m2, vcov = vcovCL(m2, cluster = d$uf), df = 26)
+diag(solve(cor(model.matrix(m2)[, -1])))
+table(d$uf)
