@@ -15,8 +15,13 @@ reg <- merge(tab(m1), tab(m2), by = "variavel", all = TRUE, suffixes = c("_m1", 
 reg <- reg[match(names(coef(m2)), reg$variavel), ]
 ajuste <- data.frame(modelo = c("M1", "M2"), n = c(nobs(m1), nobs(m2)), r2 = c(summary(m1)$r.squared, summary(m2)$r.squared), r2_aj = c(summary(m1)$adj.r.squared, summary(m2)$adj.r.squared))
 v <- c("taxa_homicidio", "gini", "desocupacao", "anos_estudo_esperados", "renda_pc", "pct_jovens_homens", "pct_urbano", "pop_total", "densidade")
-desc <- data.frame(variavel = v, media = sapply(d[v], mean), dp = sapply(d[v], sd), minimo = sapply(d[v], min), mediana = sapply(d[v], median), maximo = sapply(d[v], max))
+q <- function(p) sapply(d[v], quantile, p, names = FALSE)
+desc <- data.frame(variavel = v, media = sapply(d[v], mean), dp = sapply(d[v], sd), minimo = sapply(d[v], min), p25 = q(0.25), mediana = sapply(d[v], median), p75 = q(0.75), maximo = sapply(d[v], max))
+w <- waldtest(m1, m2, vcov = function(x) vcovHC(x, "HC3"), test = "F")
+dummies <- data.frame(teste = "dummies de regiao = 0 (HC3)", F = w$F[2], gl1 = abs(w$Df[2]), gl2 = w$Res.Df[2], p = w$`Pr(>F)`[2])
 dir.create("tabelas", showWarnings = FALSE)
 write.csv(reg, "tabelas/regressao.csv", row.names = FALSE)
 write.csv(ajuste, "tabelas/ajuste.csv", row.names = FALSE)
 write.csv(desc, "tabelas/descritivas.csv", row.names = FALSE)
+write.csv(dummies, "tabelas/teste_dummies.csv", row.names = FALSE)
+
