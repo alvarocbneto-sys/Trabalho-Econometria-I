@@ -19,3 +19,9 @@ plot(d$ln_pop, resid(m2))
 exp(0.01 * coef(m2)["gini"]) - 1
 summary(m1)$r.squared
 summary(m2)$r.squared
+d$res <- resid(m2)
+bptest(m2, ~ log(obitos_3anos), data = d)
+tapply(d$res, d$uf, mean)
+sd(d$gini)
+quantile(d$gini, c(0.25, 0.75))
+sum(cd > 4 / nrow(d))

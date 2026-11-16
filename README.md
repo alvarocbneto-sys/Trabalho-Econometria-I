@@ -20,7 +20,11 @@ Variável dependente: `taxa_homicidio` = óbitos de 2011–2013 / (população 2
 - `dados/brutos/`: arquivos originais baixados das fontes
 - `dados/final/base_final.csv`: base usada na análise (498 municípios, 28 variáveis)
 - `codigo/01_monta_base.py`: construção da base (Python)
-- `codigo/02_*.R` em diante: análise (R)
+- `codigo/02_importa_checa.R`: importação e checagem da base
+- `codigo/03_descritiva.R`: estatísticas descritivas e gráficos
+- `codigo/04_regressao.R`: modelos M1 e M2, erros-padrão, diagnósticos
+- `codigo/05_robustez.R`: tabela de robustez
+- `tabelas/robustez.csv`: saída da tabela de robustez
 
 ## Método
 Regressão linear múltipla (MQO) com erros-padrão robustos.

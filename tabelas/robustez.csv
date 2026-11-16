@@ -1,0 +1,22 @@
+"modelo","var","beta","ep","p"
+"M1 HC3","gini",-0.128,0.7853,0.8706
+"M1 HC3","desocupacao",0.0358,0.0121,0.0032
+"M1 HC3","anos_estudo_esperados",-0.2152,0.047,0
+"M2 HC3","gini",-0.264,0.8514,0.7566
+"M2 HC3","desocupacao",0.0558,0.011,0
+"M2 HC3","anos_estudo_esperados",-0.2416,0.0458,0
+"M2 HC1","gini",-0.264,0.8224,0.7483
+"M2 HC1","desocupacao",0.0558,0.0107,0
+"M2 HC1","anos_estudo_esperados",-0.2416,0.0443,0
+"M2 cluster UF","gini",-0.264,1.1615,0.8203
+"M2 cluster UF","desocupacao",0.0558,0.0138,1e-04
+"M2 cluster UF","anos_estudo_esperados",-0.2416,0.0334,0
+"M2 sem LEM HC3","gini",0.0828,0.7735,0.9148
+"M2 sem LEM HC3","desocupacao",0.0558,0.011,0
+"M2 sem LEM HC3","anos_estudo_esperados",-0.2601,0.0417,0
+"M2 WLS pop HC3","gini",1.0553,0.9807,0.2824
+"M2 WLS pop HC3","desocupacao",0.0321,0.0185,0.0835
+"M2 WLS pop HC3","anos_estudo_esperados",-0.3261,0.0603,0
+"UF dummies HC1","gini",-0.8207,0.7738,0.2894
+"UF dummies HC1","desocupacao",0.0634,0.0106,0
+"UF dummies HC1","anos_estudo_esperados",-0.1973,0.0567,6e-04
