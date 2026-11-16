@@ -1,4 +1,4 @@
-library(readxl)
+ library(readxl)
 library(zoo)
 brutos <- "dados/brutos/"
 le <- function(arq, pular, n) as.data.frame(read_excel(paste0(brutos, arq), sheet = 1, col_names = FALSE, skip = pular, col_types = "text"))[, 1:n]
