@@ -2,7 +2,7 @@ library(readxl)
 library(zoo)
 brutos <- "dados/brutos/"
 le <- function(arq, pular, n) as.data.frame(read_excel(paste0(brutos, arq), sheet = 1, col_names = FALSE, skip = pular, col_types = "text"))[, 1:n]
-atlas <- read_excel(paste0(brutos, "atlas_censo_total_1991_2010.xlsx"), sheet = "MUN 91-00-10")
+atlas <- read_excel(paste0(brutos, "atlas_censo_total_1991_2010.xlsx"), sheet = "MUN 91-00-10", guess_max = 1e5)
 atlas <- atlas[atlas$ANO == 2010, ]
 df <- data.frame(cod7 = as.character(as.integer(atlas$Codmun7)), cod6 = as.integer(atlas$Codmun6), municipio = atlas[["Município"]], gini = atlas$GINI, desocupacao = atlas$T_DES18M, analfabetismo = atlas$T_ANALF18M, anos_estudo_esperados = atlas$E_ANOSESTUDO, renda_pc = atlas$RDPC, nem_nem_vulneravel = atlas$T_NESTUDA_NTRAB_MMEIO)
 p202 <- le("sidra_202_populacao_2010.xlsx", 5, 4)
