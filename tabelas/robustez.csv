@@ -17,6 +17,6 @@
 "M2 WLS pop HC3","gini",1.0553,0.9807,0.2824
 "M2 WLS pop HC3","desocupacao",0.0321,0.0185,0.0835
 "M2 WLS pop HC3","anos_estudo_esperados",-0.3261,0.0603,0
-"UF dummies HC1","gini",-0.8207,0.7738,0.2894
-"UF dummies HC1","desocupacao",0.0634,0.0106,0
-"UF dummies HC1","anos_estudo_esperados",-0.1973,0.0567,6e-04
+"UF dummies HC3 sem RR e DF","gini",-0.8207,0.8102,0.3116
+"UF dummies HC3 sem RR e DF","desocupacao",0.0634,0.0112,0
+"UF dummies HC3 sem RR e DF","anos_estudo_esperados",-0.1973,0.0589,9e-04

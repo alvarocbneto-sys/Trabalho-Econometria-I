@@ -10,7 +10,7 @@ m1 <- lm(f1, d)
 m2 <- lm(f2, d)
 m3 <- lm(f2, d, weights = pop_total)
 m4 <- lm(f2, d, subset = cod7 != 2919553)
-m5 <- lm(update(f1, . ~ . + factor(uf)), d)
+m5 <- lm(update(f1, . ~ . + factor(uf)), d, subset = !uf %in% c("14", "53"))
 ext <- function(nome, m, V, df = NULL) {
   ct <- coeftest(m, vcov = V, df = df)
   v <- c("gini", "desocupacao", "anos_estudo_esperados")
@@ -23,9 +23,16 @@ tab <- rbind(
   ext("M2 cluster UF", m2, vcovCL(m2, cluster = d$uf), 26),
   ext("M2 sem LEM HC3", m4, vcovHC(m4, "HC3")),
   ext("M2 WLS pop HC3", m3, vcovHC(m3, "HC3")),
-  ext("UF dummies HC1", m5, vcovHC(m5, "HC1"))
+  ext("UF dummies HC3 sem RR e DF", m5, vcovHC(m5, "HC3"))
 )
 tab[, 3:5] <- round(tab[, 3:5], 4)
 tab
 dir.create("tabelas", showWarnings = FALSE)
 write.csv(tab, "tabelas/robustez.csv", row.names = FALSE)
+g <- c("gini", "desocupacao", "anos_estudo_esperados", "ln_renda_pc")
+for (k in 1:4) { m <- lm(reformulate(g[1:k], "ln_taxa"), d); print(coeftest(m, vcov = vcovHC(m, "HC3"))["gini", ]) }
+b <- coef(m2)["gini"]
+ic_hc3 <- b + c(-1, 1) * qt(0.975, df.residual(m2)) * sqrt(vcovHC(m2, "HC3")["gini", "gini"])
+ic_cl <- b + c(-1, 1) * qt(0.975, 26) * sqrt(vcovCL(m2, cluster = d$uf)["gini", "gini"])
+exp(sd(d$gini) * ic_hc3) - 1
+exp(sd(d$gini) * ic_cl) - 1
