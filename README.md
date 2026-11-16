@@ -14,25 +14,32 @@ A desigualdade de renda, a desocupação e a educação influenciam a taxa de ho
 | Homens de 15 a 29 anos | IBGE/SIDRA, tabela 1552 |
 | Área territorial | IBGE/SIDRA, tabela 1301 |
 
-Variável dependente: `taxa_homicidio` = óbitos de 2011–2013 / (população 2010 × 3) × 100.000.
+Variável dependente: `taxa_homicidio` = óbitos de 2011–2013 / (população 2010 × 3) × 100.000. Nas regressões usa-se ln(taxa).
 
 ## Estrutura
 - `dados/brutos/`: arquivos originais baixados das fontes
 - `dados/final/base_final.csv`: base usada na análise (498 municípios, 28 variáveis)
-- `codigo/01_monta_base.py`: construção da base (Python)
+- `dados/final/base_todos_municipios_2010.csv`: base com todos os 5.565 municípios
+- `codigo/01_monta_base.R`: construção da base
 - `codigo/02_importa_checa.R`: importação e checagem da base
-- `codigo/03_descritiva.R`: estatísticas descritivas e gráficos
+- `codigo/03_descritiva.R`: estatísticas descritivas e gráficos exploratórios
 - `codigo/04_regressao.R`: modelos M1 e M2, erros-padrão, diagnósticos
 - `codigo/05_robustez.R`: tabela de robustez
+- `codigo/06_figuras.R`: figuras do artigo
 - `tabelas/robustez.csv`: saída da tabela de robustez
+- `figuras/`: figuras do artigo (PNG)
 
 ## Método
-Regressão linear múltipla (MQO) com erros-padrão robustos.
+Regressão linear múltipla (MQO) com ln(taxa de homicídios) como variável dependente. Erros-padrão robustos HC3 nas especificações principais. Na robustez: HC1, erros-padrão clusterizados por UF (estatística t com 26 graus de liberdade), exclusão de Luís Eduardo Magalhães, MQO ponderado pela população e dummies de UF (sem RR e DF, que têm um único município).
 
 ## Reprodução
-1. Rodar `codigo/01_monta_base.py` (pandas, numpy, openpyxl).
-2. Rodar os scripts em R na ordem numérica.
+1. Instalar os pacotes: `install.packages(c("readxl", "zoo", "sandwich", "lmtest", "ggplot2"))`.
+2. Com a raiz do repositório como diretório de trabalho, rodar os scripts de `codigo/` em ordem numérica, de 01 a 06.
+3. O script 01 gera `dados/final/base_final.csv`; o 05 gera `tabelas/robustez.csv`; o 06 gera as figuras em `figuras/`.
+
+## Notas
+- A base foi construída primeiro em Python e depois portada para R; a saída em R foi comparada com a original por `all.equal` e é idêntica.
+- O VIF é calculado por `diag(solve(cor(model.matrix(m2)[, -1])))`, porque o pacote `car` não pôde ser instalado.
 
 ## Uso de IA
 Os links públicos das conversas com IA estão no artigo.
-
