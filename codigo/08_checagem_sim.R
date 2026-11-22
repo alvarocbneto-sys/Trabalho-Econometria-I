@@ -16,7 +16,11 @@ marca <- function(a, b) d$municipio[d$taxa_homicidio <= quantile(d$taxa_homicidi
 marca(0.1, 0.9)
 marca(0.05, 0.95)
 marca(0.15, 0.85)
-table(d$regiao, d$taxa_indet > quantile(d$taxa_indet, 0.9))
+round(100 * prop.table(table(d$regiao, d$taxa_indet > quantile(d$taxa_indet, 0.9)), 1), 1)
 r10 <- ave(d$taxa_homicidio, d$regiao, FUN = function(x) quantile(x, 0.1))
 r90 <- ave(d$taxa_indet, d$regiao, FUN = function(x) quantile(x, 0.9))
 d$municipio[d$taxa_homicidio <= r10 & d$taxa_indet > r90]
+head(sort(d$taxa_indet, decreasing = TRUE), 3)
+d$municipio[order(cooks.distance(m), decreasing = TRUE)[1:6]]
+m_sem <- lm(update(formula(m), log(taxa_homicidio) ~ .), d, subset = !cod6 %in% c(291955, 290320))
+coeftest(m_sem, vcov = vcovHC(m_sem, "HC3"))[2:4, ]

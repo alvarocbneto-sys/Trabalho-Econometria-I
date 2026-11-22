@@ -36,3 +36,7 @@ ic_hc3 <- b + c(-1, 1) * qt(0.975, df.residual(m2)) * sqrt(vcovHC(m2, "HC3")["gi
 ic_cl <- b + c(-1, 1) * qt(0.975, 26) * sqrt(vcovCL(m2, cluster = d$uf)["gini", "gini"])
 exp(sd(d$gini) * ic_hc3) - 1
 exp(sd(d$gini) * ic_cl) - 1
+v <- c("gini", "desocupacao", "anos_estudo_esperados")
+q <- sapply(d[v], function(x) diff(quantile(x, c(0.25, 0.75))))
+round(100 * (exp(cbind(coef(m2)[v], coefci(m2, vcov = vcovHC(m2, "HC3"))[v, ]) * q) - 1), 1)
+mean(d$gini) * c(b, ic_hc3)
