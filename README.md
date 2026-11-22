@@ -33,12 +33,14 @@ Variável dependente: `taxa_homicidio` = óbitos de 2011–2013 / (população 2
 - `figuras/`: figuras do artigo (PNG)
 
 ## Método
-Regressão linear múltipla (MQO) com ln(taxa de homicídios) como variável dependente. Erros-padrão robustos HC3 nas especificações principais. Na robustez: HC1, erros-padrão clusterizados por UF (estatística t com 26 graus de liberdade), exclusão de Luís Eduardo Magalhães, MQO ponderado pela população, dummies de UF (sem RR e DF, que têm um único município) e taxa ampla, que soma aos óbitos por agressão os de intenção indeterminada.
+Regressão linear múltipla (MQO) com ln(taxa de homicídios) como variável dependente. Erros-padrão robustos HC3 nas especificações principais. Na robustez: HC1, erros-padrão clusterizados por UF (estatística t com 26 graus de liberdade), exclusão de Luís Eduardo Magalhães, exclusão dos 2, 3, 5 e 10 municípios com maiores taxas de indeterminadas, MQO ponderado pela população, dummies de UF (sem RR e DF, que têm um único município) e taxa ampla, que soma aos óbitos por agressão os de intenção indeterminada.
 
 ## Reprodução
 1. Instalar os pacotes: `install.packages(c("readxl", "zoo", "sandwich", "lmtest", "ggplot2"))`.
 2. Com a raiz do repositório como diretório de trabalho, rodar os scripts de `codigo/` em ordem numérica, de 01 a 08.
 3. O script 01 gera `dados/final/base_final.csv`; o 05 gera `tabelas/robustez.csv`; o 06 gera as figuras em `figuras/`; o 07 gera as tabelas do artigo; o 08 imprime a checagem do SIM.
+4. Cada script começa lendo arquivos do repositório, sem depender de objetos de outra sessão: todos usam `dados/final/base_final.csv`, gerado pelo 01, e o 06 usa também `tabelas/robustez.csv`, gerado pelo 05. Nenhum script usa aleatoriedade, então não há sementes.
+5. Testado no R 4.5.1 (Windows) e, a partir de um clone limpo do repositório, rodando cada script em sessão nova (`Rscript --vanilla`), no R 4.3.3 (Linux) com readxl 1.4.3, zoo 1.8.12, sandwich 3.1.0, lmtest 0.9.40 e ggplot2 3.4.4. A base e todas as tabelas geradas no teste são idênticas às do repositório. No Linux, o R precisa rodar com localidade UTF-8.
 
 ## Notas
 - A base foi construída primeiro em Python e depois portada para R; a saída em R foi comparada com a original por `all.equal` e é idêntica.

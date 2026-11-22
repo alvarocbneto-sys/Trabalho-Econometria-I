@@ -20,7 +20,9 @@ round(100 * prop.table(table(d$regiao, d$taxa_indet > quantile(d$taxa_indet, 0.9
 r10 <- ave(d$taxa_homicidio, d$regiao, FUN = function(x) quantile(x, 0.1))
 r90 <- ave(d$taxa_indet, d$regiao, FUN = function(x) quantile(x, 0.9))
 d$municipio[d$taxa_homicidio <= r10 & d$taxa_indet > r90]
+dbinom(0, c(42, 30, 72), 0.1)
 head(sort(d$taxa_indet, decreasing = TRUE), 3)
-d$municipio[order(cooks.distance(m), decreasing = TRUE)[1:6]]
+head(sort(setNames(cooks.distance(m), d$municipio), decreasing = TRUE), 6)
 m_sem <- lm(update(formula(m), log(taxa_homicidio) ~ .), d, subset = !cod6 %in% c(291955, 290320))
 coeftest(m_sem, vcov = vcovHC(m_sem, "HC3"))[2:4, ]
+sapply(c(2, 3, 5, 10), function(n) { s <- lm(formula(m_sem), d[rank(-d$taxa_indet) > n, ]); coeftest(s, vcov = vcovHC(s, "HC3"))[2:4, c(1, 2, 4)] })
